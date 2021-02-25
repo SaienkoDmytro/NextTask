@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -15,6 +16,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -27,13 +29,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView navigationView;
     private ViewPager2 viewPager2;
     private Toolbar toolbar;
+    private String city;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent intent = getIntent();
+        city = intent.getStringExtra(ScreenActivity.EXTRA_TEXT);
 
         toolbar = findViewById(R.id.toolbar);
+        if (!city.equals("nothing")) {
+            setTitle(city);
+        }
         setSupportActionBar(toolbar);
 
         navigationView = findViewById(R.id.nvView);
@@ -46,16 +55,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         viewPager2 = findViewById(R.id.view_pager);
         viewPager2.setAdapter(new PagerAdapter(this));
 
+        swipeRefreshLayout = findViewById(R.id.swipe);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            city = "Moskva";
+            setTitle(city);
+            swipeRefreshLayout.setRefreshing(false);
+        });
+
         TabLayout tabLayout = findViewById(R.id.tab_layout);
-        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
-            @Override
-            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                if (position == 0) {
-                    tab.setText(R.string.first);
-                }
-                if (position == 1) {
-                    tab.setText(R.string.second);
-                }
+        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> {
+            if (position == 0) {
+                tab.setText(R.string.first);
+            }
+            if (position == 1) {
+                tab.setText(R.string.second);
             }
         });
         tabLayoutMediator.attach();

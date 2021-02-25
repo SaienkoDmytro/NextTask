@@ -3,10 +3,14 @@ package com.example.nexttask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +27,8 @@ public class FirstFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+     RecyclerView recyclerView1;
+     ArrayList<DataModel> dataHolder;
 
     public FirstFragment() {
         // Required empty public constructor
@@ -59,6 +65,19 @@ public class FirstFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_first, container, false);
+        View view = inflater.inflate(R.layout.fragment_first, container, false);
+        recyclerView1 = view.findViewById(R.id.recycler1);
+        recyclerView1.setLayoutManager(new LinearLayoutManager(getContext()));
+        dataHolder = new ArrayList<>();
+        DataModel obj1 = new DataModel(R.drawable.iconfinder_weather01_4102328, "Сегодня - Ясно", "-6С/+2С");
+        dataHolder.add(obj1);
+        DataModel obj2 = new DataModel(R.drawable.iconfinder_weather01_4102328, "Сегодня - Ясно", "-6С/+2С");
+        dataHolder.add(obj2);
+        DataModel obj3 = new DataModel(R.drawable.iconfinder_weather01_4102328, "Сегодня - Ясно", "-6С/+2С");
+        dataHolder.add(obj3);
+
+        recyclerView1.setAdapter(new MyAdapter(dataHolder));
+
+        return view;
     }
 }
