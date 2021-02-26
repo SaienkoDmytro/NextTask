@@ -7,20 +7,24 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -57,9 +61,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         swipeRefreshLayout = findViewById(R.id.swipe);
         swipeRefreshLayout.setOnRefreshListener(() -> {
-            city = "Moskva";
-            setTitle(city);
-            swipeRefreshLayout.setRefreshing(false);
+
+          new getCity();
+          setTitle(city);
+          swipeRefreshLayout.setRefreshing(false);
         });
 
         TabLayout tabLayout = findViewById(R.id.tab_layout);
@@ -92,4 +97,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+    private class getCity implements LocationListener {
+
+        @Override
+        public void onLocationChanged(@NonNull Location location) {
+            try {
+                Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+                List<Address> addressList = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(),1);
+                city = addressList.get(0).getLocality();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
+

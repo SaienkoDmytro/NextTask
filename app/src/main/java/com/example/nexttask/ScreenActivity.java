@@ -2,7 +2,6 @@ package com.example.nexttask;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -12,18 +11,13 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.provider.Settings;
-import android.view.View;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -60,14 +54,14 @@ public class ScreenActivity extends AppCompatActivity implements LocationListene
                 startActivity(intent);
                 finish();
             }
-        }, 8000);
+        }, 5000);
 
     }
 
     private void getLocation() {
         try {
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 500, 5, (LocationListener) this);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 500, 5,  this);
         } catch (SecurityException e) {
             e.printStackTrace();
         }
@@ -113,7 +107,6 @@ public class ScreenActivity extends AppCompatActivity implements LocationListene
             List<Address> addressList = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(),1);
             city1.setText(addressList.get(0).getLocality());
             city = city1.getText().toString();
-
         } catch (IOException e) {
             e.printStackTrace();
         }

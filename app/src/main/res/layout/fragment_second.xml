@@ -12,10 +12,11 @@
         android:background="@color/teal_200">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler1"
+            android:id="@+id/recycler2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
+            android:background="@color/teal_200"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -59,7 +60,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.6"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recycler1"
+            app:layout_constraintTop_toBottomOf="@+id/recycler2"
             app:layout_constraintVertical_bias="0.0" />
 
         <ProgressBar
