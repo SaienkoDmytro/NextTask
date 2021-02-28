@@ -1,4 +1,4 @@
-package com.example.nexttask;
+package com.example.nexttask.recycler;
 
 public class DataModel {
     private int image;

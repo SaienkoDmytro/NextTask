@@ -1,4 +1,4 @@
-package com.example.nexttask;
+package com.example.nexttask.recycler;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,12 +9,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.nexttask.R;
+
 import java.util.ArrayList;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
     ArrayList<DataModel> dataHolder;
 
-    public MyAdapter(ArrayList<DataModel> dataHolder) {
+    public RecyclerAdapter(ArrayList<DataModel> dataHolder) {
         this.dataHolder = dataHolder;
     }
 

@@ -17,8 +17,8 @@
     android:padding="2dp">
 
     <ImageView
-        android:layout_height="30dp"
-        android:layout_width="30dp"
+        android:layout_height="35dp"
+        android:layout_width="35dp"
         android:src="@mipmap/ic_launcher"
         android:layout_marginTop="2dp"
         android:layout_marginStart="20dp"
@@ -33,12 +33,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:background="@color/teal_200"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="2dp"
         android:layout_toEndOf="@+id/img1"
         android:gravity="center_vertical"
         android:text="@string/some"
-        android:textColor="#000"
+        android:textColor="@color/black"
         android:textSize="15sp"
         android:textStyle="bold" />
 
@@ -48,8 +48,9 @@
         android:layout_height="wrap_content"
         android:background="@color/teal_200"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="2dp"
+        android:textColor="@color/black"
         android:layout_toEndOf="@+id/t1"
         android:text="@string/text"
         android:textSize="15sp" />

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SecondFragment">
+    tools:context=".pagerFragments.SecondFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -12,67 +12,154 @@
         android:background="@color/teal_200">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler2"
+            android:id="@+id/recyclerSecond"
             android:layout_width="match_parent"
+            android:orientation="horizontal"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:background="@color/teal_200"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-    <!-- TODO: Update blank fragment layout -->
-
-        <TextView
-            android:id="@+id/textView"
+            app:layout_constraintTop_toTopOf="parent" />
+        
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="100dp"
             android:layout_margin="20dp"
             android:layout_marginBottom="44dp"
-            android:background="@color/teal_700"
+            android:background="@color/card"
+            app:cardCornerRadius="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/card">
 
-        <TextView
-            android:id="@+id/humadity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="116dp"
-            android:text="@string/humadity"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="@+id/textview1"
-            app:layout_constraintHorizontal_bias="0.124"
-            app:layout_constraintStart_toStartOf="@+id/textview1"
-            app:layout_constraintTop_toTopOf="@+id/textview1" />
+                <TextView
+                    android:id="@+id/air"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/airNumber"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/card"
+                    android:text="@string/airStatus"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
 
-        <TextView
+                <TextView
+                    android:id="@+id/airNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/card"
+                    android:text="@string/air_number"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
             android:id="@+id/textview1"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="250dp"
             android:layout_margin="20dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/teal_700"
-            app:layout_constraintBottom_toTopOf="@+id/textView"
+            android:background="@color/card"
+            app:cardCornerRadius="15dp"
+            app:layout_constraintBottom_toTopOf="@+id/cardView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.6"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recycler2"
-            app:layout_constraintVertical_bias="0.0" />
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="59dp"
-            app:layout_constraintEnd_toEndOf="@+id/textview1"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="@+id/textview1"
-            app:layout_constraintTop_toTopOf="@+id/textview1" />
+            app:layout_constraintVertical_bias="0.0">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/card">
+
+                <TextView
+                    android:id="@+id/humadity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="83dp"
+                    android:layout_marginEnd="256dp"
+                    android:layout_marginBottom="139dp"
+                    android:text="@string/humadity"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/humadityNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="130dp"
+                    android:layout_marginEnd="302dp"
+                    android:text="@string/humadity_number"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/wind"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="83dp"
+                    android:layout_marginEnd="34dp"
+                    android:text="@string/windSpeed"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/windNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="127dp"
+                    android:layout_marginEnd="68dp"
+                    android:text="@string/wind_number"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="151dp"
+                    android:layout_marginTop="35dp"
+                    android:layout_marginEnd="172dp"
+                    android:layout_marginBottom="249dp"
+                    android:textColor="@color/black" />
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

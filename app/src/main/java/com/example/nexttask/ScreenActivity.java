@@ -18,7 +18,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.provider.Settings;
-import android.widget.TextView;
 
 import java.io.IOException;
 import java.util.List;
@@ -29,38 +28,38 @@ import java.util.TimerTask;
 public class ScreenActivity extends AppCompatActivity implements LocationListener {
 
     public static final String EXTRA_TEXT = "com.example.nexttask";
-    private LocationManager locationManager;
-    private TextView city1;
     private String city;
-    private Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screen);
-        city1 = findViewById(R.id.city);
         city = "nothing";
         grantPermission();
-        checkLocationEnableOrNot();
-        getLocation();
+        if (grantPermission()) {
+            checkLocationEnableOrNot();
+            getLocation();
+            startMainActivity();
+        } else {
+            new AlertDialog.Builder(ScreenActivity.this)
+                    .setTitle(R.string.alertstart)
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.start_activity_ok, (dialog, which) -> startMainActivity()).setNegativeButton(R.string.start_activity_cancel, null)
+                    .show();
+        }
+    }
 
-        timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(ScreenActivity.this, MainActivity.class);
-                intent.putExtra(EXTRA_TEXT, city);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                finish();
-            }
-        }, 5000);
-
+    private void startMainActivity () {
+        Intent intent = new Intent(ScreenActivity.this, MainActivity.class);
+        intent.putExtra(EXTRA_TEXT, city);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     private void getLocation() {
         try {
-            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 500, 5,  this);
         } catch (SecurityException e) {
             e.printStackTrace();
@@ -93,10 +92,13 @@ public class ScreenActivity extends AppCompatActivity implements LocationListene
 
     }
 
-    private void grantPermission() {
+    private boolean grantPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
         && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
+            return false;
+        } else {
+            return true;
         }
     }
 
@@ -105,8 +107,7 @@ public class ScreenActivity extends AppCompatActivity implements LocationListene
         try {
             Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
             List<Address> addressList = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(),1);
-            city1.setText(addressList.get(0).getLocality());
-            city = city1.getText().toString();
+            city = addressList.get(0).getLocality();
         } catch (IOException e) {
             e.printStackTrace();
         }

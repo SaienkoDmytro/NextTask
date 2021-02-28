@@ -1,7 +1,9 @@
-package com.example.nexttask;
+package com.example.nexttask.pagerFragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,6 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import com.example.nexttask.MainActivity;
+import com.example.nexttask.R;
+import com.example.nexttask.recycler.DataModel;
+import com.example.nexttask.recycler.RecyclerAdapter;
 
 import java.util.ArrayList;
 
@@ -27,8 +35,6 @@ public class FirstFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-     RecyclerView recyclerView1;
-     ArrayList<DataModel> dataHolder;
 
     public FirstFragment() {
         // Required empty public constructor
@@ -66,9 +72,9 @@ public class FirstFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_first, container, false);
-        recyclerView1 = view.findViewById(R.id.recycler1);
-        recyclerView1.setLayoutManager(new LinearLayoutManager(getContext()));
-        dataHolder = new ArrayList<>();
+        RecyclerView recyclerViewFirst = view.findViewById(R.id.recyclerFirst);
+        recyclerViewFirst.setLayoutManager(new LinearLayoutManager(getContext()));
+        ArrayList<DataModel> dataHolder = new ArrayList<>();
         DataModel obj1 = new DataModel(R.drawable.iconfinder_weather01_4102328, "Сегодня - Ясно", "-6С/+2С");
         dataHolder.add(obj1);
         DataModel obj2 = new DataModel(R.drawable.iconfinder_weather01_4102328, "Сегодня - Ясно", "-6С/+2С");
@@ -76,8 +82,16 @@ public class FirstFragment extends Fragment {
         DataModel obj3 = new DataModel(R.drawable.iconfinder_weather01_4102328, "Сегодня - Ясно", "-6С/+2С");
         dataHolder.add(obj3);
 
-        recyclerView1.setAdapter(new MyAdapter(dataHolder));
+        recyclerViewFirst.setAdapter(new RecyclerAdapter(dataHolder));
+
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Button button = view.findViewById(R.id.additional);
+        button.setOnClickListener(v -> ((MainActivity)getActivity()).changeButton(1));
     }
 }

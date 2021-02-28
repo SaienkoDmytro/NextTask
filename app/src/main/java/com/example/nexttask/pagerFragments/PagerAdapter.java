@@ -1,4 +1,4 @@
-package com.example.nexttask;
+package com.example.nexttask.pagerFragments;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

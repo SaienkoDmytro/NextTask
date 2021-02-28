@@ -10,18 +10,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-    <LinearLayout
+    <GridLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:orientation="vertical"
         android:background="@color/teal_200"
+        android:orientation="vertical"
         android:padding="2dp">
+
         <TextView
             android:id="@+id/t1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginStart="2dp"
             android:background="@color/teal_200"
             android:text="@string/some"
             android:textColor="#000"
@@ -29,24 +30,24 @@
             android:textStyle="bold" />
 
         <ImageView
-            android:layout_height="30dp"
-            android:layout_width="30dp"
-            android:src="@mipmap/ic_launcher"
-          android:layout_gravity="center_horizontal"
             android:id="@+id/img1"
-            android:contentDescription="@string/some" />
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/some"
+            android:src="@mipmap/ic_launcher" />
 
 
         <TextView
             android:id="@+id/t2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/teal_200"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="2dp"
+            android:background="@color/teal_200"
             android:text="@string/text"
             android:textSize="15sp" />
 
-    </LinearLayout>
+    </GridLayout>
 
 </androidx.cardview.widget.CardView>

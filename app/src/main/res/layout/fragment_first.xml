@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FirstFragment">
+    tools:context=".pagerFragments.FirstFragment">
 
 
     <!-- TODO: Update blank fragment layout -->
@@ -18,32 +18,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textColor="@color/white"
-            android:layout_marginTop="196dp"
+            android:layout_marginTop="96dp"
             android:text="@string/degree"
+            android:gravity="center_horizontal"
+            android:textColor="@color/black"
             android:textSize="90sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="196dp"
+            android:layout_marginTop="96dp"
+            android:contentDescription="@string/mark"
             android:src="@drawable/iconfinder_celsius_110841"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/degree"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/mark" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
+            android:gravity="center_horizontal"
             android:text="@string/status"
+            android:layout_marginTop="10dp"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -51,31 +53,46 @@
             app:layout_constraintTop_toBottomOf="@+id/degree"
             app:layout_constraintVertical_bias="0.0" />
 
-        <TextView
-            android:id="@+id/someinfo"
+        <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="@string/someinfo"
-            android:textSize="20sp"
+            android:id="@+id/cardView"
+            app:cardCornerRadius="8dp"
+            android:background="@color/card"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/status"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.0">
+
+            <TextView
+                android:id="@+id/someinfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/someinfo"
+                android:background="@color/card"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+        </androidx.cardview.widget.CardView>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler1"
+            android:id="@+id/recyclerFirst"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="10dp"
             android:layout_marginTop="128dp"
             android:background="@color/teal_200"
+            android:gravity="center_horizontal"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/someinfo" />
+            app:layout_constraintTop_toBottomOf="@+id/cardView"
+            app:layout_constraintVertical_bias="1.0" />
 
         <Button
             android:id="@+id/additional"
@@ -84,11 +101,10 @@
             android:layout_gravity="bottom"
             android:layout_margin="10dp"
             android:background="@color/teal_200"
-            android:onClick="next"
             android:text="@string/button"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             style="?android:borderlessButtonStyle"
-            app:layout_constraintBottom_toTopOf="@+id/recycler1"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerFirst"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"

@@ -28,4 +28,12 @@
     <string name="alerttitle">Enable GPS</string>
     <string name="alert_positive">Enable</string>
     <string name="alert_negative">Cancel</string>
+    <string name="alertstart">Permissions not granted!</string>
+    <string name="start_activity_ok">Proceed anyway</string>
+    <string name="start_activity_cancel">Cancel</string>
+    <string name="airStatus">Индекс воздуха</string>
+    <string name="air_number">Индекс 41</string>
+    <string name="windSpeed">Скорость ветра</string>
+    <string name="humadity_number">60%</string>
+    <string name="wind_number">30 км/ч</string>
 </resources>

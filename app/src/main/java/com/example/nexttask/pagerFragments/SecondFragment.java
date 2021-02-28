@@ -1,14 +1,18 @@
-package com.example.nexttask;
+package com.example.nexttask.pagerFragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.nexttask.R;
+import com.example.nexttask.recycler.DataModel;
+import com.example.nexttask.recycler.RecyclerAdapter;
 
 import java.util.ArrayList;
 
@@ -27,8 +31,6 @@ public class SecondFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    RecyclerView recyclerView2;
-    ArrayList<DataModel> dataHolder;
 
     public SecondFragment() {
         // Required empty public constructor
@@ -66,18 +68,18 @@ public class SecondFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_second, container, false);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerView2 = view.findViewById(R.id.recycler2);
-        recyclerView2.setLayoutManager(layoutManager);
-        dataHolder = new ArrayList<>();
-        DataModel obj1 = new DataModel(R.drawable.iconfinder_weather01_4102328, "Сегодня - Ясно", "-6С/+2С");
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3, GridLayoutManager.VERTICAL, false);
+        RecyclerView recyclerViewSecondFrag = view.findViewById(R.id.recyclerSecond);
+        recyclerViewSecondFrag.setLayoutManager(gridLayoutManager);
+        ArrayList<DataModel> dataHolder = new ArrayList<>();
+        DataModel obj1 = new DataModel(R.drawable.iconfinder_weather01_4102328, "Ясно", "+2С");
         dataHolder.add(obj1);
-        DataModel obj2 = new DataModel(R.drawable.iconfinder_weather01_4102328, "Сегодня - Ясно", "-6С/+2С");
+        DataModel obj2 = new DataModel(R.drawable.iconfinder_weather01_4102328, "Ясно", "+2С");
         dataHolder.add(obj2);
-        DataModel obj3 = new DataModel(R.drawable.iconfinder_weather01_4102328, "Сегодня - Ясно", "-6С/+2С");
+        DataModel obj3 = new DataModel(R.drawable.iconfinder_weather01_4102328, "Ясно", "+2С");
         dataHolder.add(obj3);
 
-        recyclerView2.setAdapter(new MyAdapter(dataHolder));
+        recyclerViewSecondFrag.setAdapter(new RecyclerAdapter(dataHolder));
 
         return view;
     }

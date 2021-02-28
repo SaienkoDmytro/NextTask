@@ -9,15 +9,17 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 
+import com.example.nexttask.pagerFragments.PagerAdapter;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -27,12 +29,10 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, LocationListener {
 
     private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
     private ViewPager2 viewPager2;
-    private Toolbar toolbar;
     private String city;
     private SwipeRefreshLayout swipeRefreshLayout;
 
@@ -43,13 +43,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = getIntent();
         city = intent.getStringExtra(ScreenActivity.EXTRA_TEXT);
 
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         if (!city.equals("nothing")) {
             setTitle(city);
         }
         setSupportActionBar(toolbar);
 
-        navigationView = findViewById(R.id.nvView);
+        NavigationView navigationView = findViewById(R.id.nvView);
         drawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
@@ -61,9 +61,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         swipeRefreshLayout = findViewById(R.id.swipe);
         swipeRefreshLayout.setOnRefreshListener(() -> {
-
-          new getCity();
-          setTitle(city);
+            getLocation();
+            setTitle(city);
           swipeRefreshLayout.setRefreshing(false);
         });
 
@@ -80,10 +79,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    public void next (View view){
-        viewPager2.setCurrentItem(1, true);
-    }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.menu) {
@@ -98,20 +93,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    public void changeButton (int page) {
+        viewPager2.setCurrentItem(page, true);
+    }
 
-    private class getCity implements LocationListener {
+    @Override
+    public void onLocationChanged(@NonNull Location location) {
+        try {
+            Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+            List<Address> addressList = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(),1);
+            city = addressList.get(0).getLocality();
 
-        @Override
-        public void onLocationChanged(@NonNull Location location) {
-            try {
-                Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
-                List<Address> addressList = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(),1);
-                city = addressList.get(0).getLocality();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+
+    private void getLocation() {
+        try {
+            LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 500, 5,  this);
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 
