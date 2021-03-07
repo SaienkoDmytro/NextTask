@@ -12,11 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.nexttask.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
-    ArrayList<DataModel> dataHolder;
+    List<DataModel> dataHolder;
 
-    public RecyclerAdapter(ArrayList<DataModel> dataHolder) {
+    public RecyclerAdapter(List<DataModel> dataHolder) {
         this.dataHolder = dataHolder;
     }
 

@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@drawable/iconfinder_weather_3_2682848"
+        android:src="@drawable/iconfinder_big_sun"
         android:contentDescription="@string/some" />
 
 

@@ -6,6 +6,9 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 public class PagerAdapter extends FragmentStateAdapter {
+
+    private final static int PAGE_COUNT = 2;
+
     public PagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
@@ -13,14 +16,14 @@ public class PagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        if (position == 1) {
-            return new SecondFragment();
-        }
+
+        if (position == 0) {
             return new FirstFragment();
+        } else return new SecondFragment();
     }
 
     @Override
     public int getItemCount() {
-        return 2;
+        return PAGE_COUNT;
     }
 }

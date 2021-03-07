@@ -17,13 +17,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.os.Parcelable;
 import android.provider.Settings;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class ScreenActivity extends AppCompatActivity implements LocationListener {
 
@@ -34,13 +33,17 @@ public class ScreenActivity extends AppCompatActivity implements LocationListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screen);
-        city = "nothing";
-        grantPermission();
+
         if (grantPermission()) {
-            checkLocationEnableOrNot();
-            getLocation();
-            startMainActivity();
-        } else {
+            if (checkLocationEnableOrNot()) {
+                getLocation();
+                startMainActivity();
+                } else  new AlertDialog.Builder(ScreenActivity.this)
+                    .setTitle(R.string.alertstart)
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.start_activity_ok, (dialog, which) -> startMainActivity()).setNegativeButton(R.string.start_activity_cancel, null)
+                    .show();
+            } else {
             new AlertDialog.Builder(ScreenActivity.this)
                     .setTitle(R.string.alertstart)
                     .setCancelable(false)
@@ -66,7 +69,7 @@ public class ScreenActivity extends AppCompatActivity implements LocationListene
         }
     }
 
-    private void checkLocationEnableOrNot() {
+    private boolean checkLocationEnableOrNot() {
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         boolean gpsEnable = false;
         boolean netEnable = false;
@@ -87,9 +90,8 @@ public class ScreenActivity extends AppCompatActivity implements LocationListene
                     .setCancelable(false)
                     .setPositiveButton(R.string.alert_positive, (dialog, which) -> startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))).setNegativeButton(R.string.alert_negative, null)
                     .show();
-
-        }
-
+            return false;
+        } else return true;
     }
 
     private boolean grantPermission() {
