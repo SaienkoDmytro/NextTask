@@ -26,36 +26,33 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.widget.Toast;
 
-import com.example.nexttask.Network.APIService;
-import com.example.nexttask.Network.City;
-import com.example.nexttask.Network.NetworkClient;
-import com.example.nexttask.pagerFragments.FirstFragment;
-import com.example.nexttask.pagerFragments.PagerAdapter;
+import com.example.nexttask.MainActivityMVP.MainContract;
+import com.example.nexttask.MainActivityMVP.MainPresenter;
+import com.example.nexttask.FirstFragmentMVP.FirstFragment;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
-public class MainActivity extends AppCompatActivity implements LocationListener, FirstFragment.DataPassListener {
+public class MainActivity extends AppCompatActivity implements LocationListener, FirstFragment.DataPassListener, MainContract.View {
 
     private ViewPager2 viewPager2;
-    private String city;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ConnectivityManager connectivityManager;
     private ConnectivityManager.NetworkCallback networkCallback;
     private boolean isWiFiConn = false;
     private boolean isMobileConn = false;
     private String keyCity;
+    private MainContract.Presenter presenter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        presenter = new MainPresenter(this);
 
         connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         for (Network network : connectivityManager.getAllNetworks()){
@@ -100,9 +97,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         swipeRefreshLayout.setOnRefreshListener(() -> {
             if (grantPermission()) {
                 getLocation();
-                if(city != null) {
-                    getCity(city);
-                }
+                presenter.doWork();
             }
             swipeRefreshLayout.setRefreshing(false);
         });
@@ -113,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         try {
             Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
             List<Address> addressList = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(),1);
-            city = addressList.get(0).getLocality();
+            String city = addressList.get(0).getLocality();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -193,28 +188,18 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        presenter.onDestroy();
     }
 
-    private void getCity(String city) {
-        APIService apiService = NetworkClient.getClient().create(APIService.class);
-        Call<List<City>> call = apiService.searchCity(NetworkClient.API_KEY, city);
-        call.enqueue(new Callback<List<City>>() {
-            @Override
-            public void onResponse(Call<List<City>> call, Response<List<City>> response) {
-                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
-                    Toast.makeText(MainActivity.this, response.body().get(0).getKey(), Toast.LENGTH_SHORT).show();
-                    keyCity = response.body().get(0).getKey();
-                    //Odesa "Key": "325343"
-                }
 
-            }
-
-            @Override
-            public void onFailure(Call<List<City>> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
+    @Override
+    public void permissionResult(String key) {
+        keyCity = key;
     }
 
+    @Override
+    public void recievePermissions() {
+        Toast.makeText(this, keyCity, Toast.LENGTH_SHORT).show();
+    }
 }
 
