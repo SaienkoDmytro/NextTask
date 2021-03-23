@@ -40,6 +40,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         return dataHolder.size();
     }
 
+    public void notifyData(ArrayList<DataModel> dataHolder) {
+        this.dataHolder = dataHolder;
+        notifyDataSetChanged();
+    }
+
     static class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
         TextView status,temp;
