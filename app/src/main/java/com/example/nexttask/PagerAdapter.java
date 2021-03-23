@@ -1,9 +1,12 @@
-package com.example.nexttask.pagerFragments;
+package com.example.nexttask;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import com.example.nexttask.FirstFragmentMVP.FirstFragment;
+import com.example.nexttask.SecondFragmentMVP.SecondFragment;
 
 public class PagerAdapter extends FragmentStateAdapter {
 

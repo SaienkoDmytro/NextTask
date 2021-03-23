@@ -9,4 +9,7 @@ import retrofit2.http.Query;
 public interface APIService {
     @GET("/locations/v1/cities/search")
     Call<List<City>> searchCity(@Query("apikey") String apikey, @Query("q") String city);
+
+    @GET("/forecasts/v1/hourly/12hour/{325343}")
+    Call<List<Today>> searchToday(@Query("apikey") String apikey, @Query("metric") String metric);
 }

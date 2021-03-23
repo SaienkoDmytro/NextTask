@@ -1,4 +1,4 @@
-package com.example.nexttask.pagerFragments;
+package com.example.nexttask.FirstFragmentMVP;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,11 +8,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.nexttask.R;
 import com.example.nexttask.recycler.DataModel;
@@ -22,9 +24,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class FirstFragment extends Fragment {
+public class FirstFragment extends Fragment implements FirstFragmentContract.View {
 
     private DataPassListener mCallback;
+    private FirstFragmentContract.Presenter presenter;
+    private TextView degree, status, someinfo;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private String temp, weather, day;
+
 
     public interface DataPassListener{
         void passFirstData(int data);
@@ -33,6 +40,7 @@ public class FirstFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        presenter = new FirstFragmentPresenter(this);
     }
 
     @Override
@@ -40,6 +48,16 @@ public class FirstFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_first, container, false);
+        degree = view.findViewById(R.id.degree);
+        status = view.findViewById(R.id.status);
+        someinfo = view.findViewById(R.id.someinfo);
+
+        swipeRefreshLayout = view.findViewById(R.id.swipe_first_fragment);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            presenter.doWork();
+            swipeRefreshLayout.setRefreshing(false);
+        });
+
         RecyclerView recyclerViewFirst = view.findViewById(R.id.recyclerFirst);
         recyclerViewFirst.setLayoutManager(new LinearLayoutManager(getContext()));
         List<DataModel> dataHolder = new ArrayList<>();
@@ -63,6 +81,20 @@ public class FirstFragment extends Fragment {
     }
 
     @Override
+    public void setTodayResult(String degree, String status, String light) {
+         temp = degree;
+         weather = status;
+         day = light;
+    }
+
+    @Override
+    public void showResult() {
+    degree.setText(temp);
+    status.setText(weather);
+    someinfo.setText(day);
+    }
+
+    @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof DataPassListener) {
@@ -76,6 +108,8 @@ public class FirstFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mCallback = null;
+        presenter.onDestroy();
     }
+
 
 }

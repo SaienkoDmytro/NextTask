@@ -15,5 +15,4 @@ public class City {
     public String getKey() {
         return key;
     }
-
 }

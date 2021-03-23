@@ -1,4 +1,4 @@
-package com.example.nexttask.pagerFragments;
+package com.example.nexttask.SecondFragmentMVP;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
